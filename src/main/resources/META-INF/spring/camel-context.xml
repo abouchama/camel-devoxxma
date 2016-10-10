@@ -27,7 +27,7 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
 
-    <route id="cbr-route">
+<route id="cbr-route">
       <from uri="timer:foo?period=5000"/>
       <!-- generate random number message, using a 3 digit number -->
       <transform>
@@ -36,10 +36,14 @@
       <choice>
         <when>
           <simple>${body} &gt; 500</simple>
-          <log message="High priority message : ${body}"/>
+          <log message="Order Received : redirected to ** MA **"/>
+        </when>
+        <when>
+          <simple>${body} &lt; 200</simple>
+          <log message="Order Received : redirected to ** FR **"/>
         </when>
         <otherwise>
-          <log message="Low priority message  : ${body}"/>
+          <log message="Order Received : redirected to ** US **"/>
         </otherwise>
       </choice>
     </route>
